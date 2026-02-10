@@ -11,7 +11,7 @@
 </head>
 <body>
   <p class="ok">Authorization successful.</p>
-  <p id="msg">Redirecting to app in 2 seconds...</p>
+  <p id="msg">Opening app...</p>
   <script>
     (function() {
       var params = new URLSearchParams(window.location.search);
@@ -24,11 +24,7 @@
       }
       if (code && state) {
         var appUrl = 'com.meetapp.test://redirect?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state);
-        setTimeout(function() {
-          var el = document.getElementById('msg');
-          if (el) el.textContent = 'Opening app...';
-          window.location.href = appUrl;
-        }, 2000);
+        window.location.replace(appUrl);
       }
     })();
   </script>
