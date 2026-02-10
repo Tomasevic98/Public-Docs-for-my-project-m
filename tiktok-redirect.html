@@ -4,30 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redirecting to Meet...</title>
-  <script>
-    (function() {
-      var params = new URLSearchParams(window.location.search);
-      var code = params.get('code');
-      var state = params.get('state');
-      var error = params.get('error');
-      if (error) {
-        document.body.innerHTML = '<p>Authorization failed. You can close this page.</p>';
-        return;
-      }
-      if (code && state) {
-        var appUrl = 'com.meetapp.test://redirect?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state);
-        window.location.href = appUrl;
-        document.body.innerHTML = '<p>Redirecting to app...</p>';
-      } else {
-        document.body.innerHTML = '<p>Missing parameters. You can close this page.</p>';
-      }
-    })();
-  </script>
   <style>
-    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; padding: 20px; }
+    .ok { color: #22c55e; font-size: 18px; }
   </style>
 </head>
 <body>
-  <p>Redirecting to app...</p>
+  <p class="ok">Authorization successful.</p>
+  <p>Close this window to return to the app.</p>
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var error = params.get('error');
+      if (error) {
+        document.body.innerHTML = '<p style="color:#dc2626;">Authorization failed. You can close this page.</p>';
+      }
+    })();
+  </script>
 </body>
 </html>
