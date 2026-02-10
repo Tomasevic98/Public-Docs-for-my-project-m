@@ -11,13 +11,24 @@
 </head>
 <body>
   <p class="ok">Authorization successful.</p>
-  <p>Close this window to return to the app.</p>
+  <p id="msg">Redirecting to app in 2 seconds...</p>
   <script>
     (function() {
       var params = new URLSearchParams(window.location.search);
       var error = params.get('error');
+      var code = params.get('code');
+      var state = params.get('state');
       if (error) {
         document.body.innerHTML = '<p style="color:#dc2626;">Authorization failed. You can close this page.</p>';
+        return;
+      }
+      if (code && state) {
+        var appUrl = 'com.meetapp.test://redirect?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state);
+        setTimeout(function() {
+          var el = document.getElementById('msg');
+          if (el) el.textContent = 'Opening app...';
+          window.location.href = appUrl;
+        }, 2000);
       }
     })();
   </script>
