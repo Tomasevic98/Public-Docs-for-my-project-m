@@ -12,7 +12,6 @@
 <body>
   <p class="ok">Authorization successful.</p>
   <p id="msg">Opening app...</p>
-  <p id="fallback" style="display:none; margin-top:1em; font-size:14px; color:#666;"></p>
   <script>
     (function() {
       var params = new URLSearchParams(window.location.search);
@@ -24,20 +23,8 @@
         return;
       }
       if (code && state) {
-        var fullUrl = window.location.href;
         var appUrl = 'com.meetapp.test://redirect?code=' + encodeURIComponent(code) + '&state=' + encodeURIComponent(state);
-        function tryOpenApp() {
-          window.location.replace(appUrl);
-        }
-        if (typeof navigator.clipboard !== 'undefined' && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(fullUrl).then(function() {
-            var el = document.getElementById('fallback');
-            if (el) { el.style.display = 'block'; el.textContent = 'Link je kopiran. Vrati se u MeetApp – nastavit će s clipboarda.'; }
-            tryOpenApp();
-          }).catch(tryOpenApp);
-        } else {
-          tryOpenApp();
-        }
+        window.location.replace(appUrl);
       }
     })();
   </script>
